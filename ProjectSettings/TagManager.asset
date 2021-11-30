@@ -8,11 +8,13 @@ TagManager:
   - Duplicate
   - Bread
   - Mushrooms
+  - CinemachineTarget
+  - Ground
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
   - 
