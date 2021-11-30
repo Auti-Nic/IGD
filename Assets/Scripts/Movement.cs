@@ -49,6 +49,9 @@ public class Movement : MonoBehaviour
             velocity.y = -2f;
         }
         
+
+        //get input 
+
         float moveZ = Input.GetAxisRaw("Vertical");
         float moveX = Input.GetAxisRaw("Horizontal");
         moveDirection = new Vector3(moveX,0,moveZ).normalized;
@@ -62,7 +65,9 @@ public class Movement : MonoBehaviour
         
         //move to lookat direction
         Vector3 lookatDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-        if (isGrounded)
+
+        if (isGrounded )
+
         {
             
             if (moveDirection == Vector3.zero)
@@ -72,12 +77,15 @@ public class Movement : MonoBehaviour
             }
             else if (moveDirection != Vector3.zero)
             {
-                //walk
+
+                //walk to look at direction
+                
                 Walk();
             }
 
-            //moveDirection *= moveSpeed;
-            lookatDir *= moveSpeed;
+            moveDirection *= moveSpeed;
+            lookatDir = lookatDir.normalized * moveSpeed;           
+
             if (Input.GetKeyDown(KeyCode.Space) && canJump)
             {
                 Jump();
@@ -86,8 +94,9 @@ public class Movement : MonoBehaviour
         }
 
         
-        
-        controller.Move(lookatDir.normalized  * Time.deltaTime);
+
+        controller.Move(moveDirection * Time.deltaTime);
+
 
         //calculat gravity
         velocity.y += gravity * Time.deltaTime;
@@ -104,12 +113,14 @@ public class Movement : MonoBehaviour
     private void Walk()
     {
         moveSpeed = walkSpeed;
+n
     }
 
     private void Jump()
     {
         //V^2 - V^2(inital) = 2ax
-        velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
+        velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);  
     }
+ 
 
 }
