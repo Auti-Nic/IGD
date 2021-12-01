@@ -66,37 +66,34 @@ public class Movement : MonoBehaviour
         //move to lookat direction
         Vector3 lookatDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
 
-        if (isGrounded )
-
-        {
+        
             
-            if (moveDirection == Vector3.zero)
-            {
+        if (moveDirection == Vector3.zero)
+        {
                 //idle 
                 Idle();
-            }
-            else if (moveDirection != Vector3.zero)
-            {
+        }
+        else if (moveDirection != Vector3.zero)
+        {
 
                 //walk to look at direction
                 
-                Walk();
-            }
-
-            moveDirection *= moveSpeed;
-            lookatDir = lookatDir.normalized * moveSpeed;           
-
-            if (Input.GetKeyDown(KeyCode.Space) && canJump)
-            {
-                Jump();
-            }
-            
+            Walk();
+            lookatDir = lookatDir.normalized * moveSpeed;
+            controller.Move(lookatDir * Time.deltaTime);
         }
+       
 
+        if (Input.GetKeyDown(KeyCode.Space) && canJump && isGrounded )
+        {
+            Jump();
+        }
+            
+            
         
 
-        controller.Move(moveDirection * Time.deltaTime);
-
+        
+        //controller.Move(moveDirection * Time.deltaTime);
 
         //calculat gravity
         velocity.y += gravity * Time.deltaTime;
@@ -105,6 +102,7 @@ public class Movement : MonoBehaviour
     }
 
 
+    //only set up speed an animator in following functions
     private void Idle()
     {
 
